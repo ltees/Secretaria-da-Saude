@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <link rel="website icon" href="../Imagens/GDF.jpeg">
+  <title>Secretaria de Saúde - Agendamento de Consultas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      text-align: center;
+      padding: 30px;
+    }
+    header img {
+      height: 120px;
+      margin-bottom: 30px;
+    }
+    form {
+      display: inline-block;
+      text-align: left;
+      width: 100%;
+      max-width: 400px;
+    }
+    h2 {
+      color: #003366;
+      margin-bottom: 20px;
+    }
+    .subtitle {
+      font-size: 20px;
+      margin-top: 40px;
+      margin-bottom: 10px;
+      color: #003366;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      width: 100%;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 15px;
+      box-shadow: none;
+    }
+    .tabela-wrapper {
+      display: inline-block;
+      width: 90%;
+      max-width: 900px;
+      margin-top: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 6px;
+      text-align: center;
+    }
+    .actions button {
+      display: block;
+      width: 100%;
+      margin-bottom: 6px;
+      padding: 6px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html">
+    <img src="../Imagens/Logo.png" alt="Secretaria de Saúde - GDF">
+    </a>
+  </header>
+
+  <h2>Agendar Consulta</h2>
+
+  <form id="form-agendamento">
+    <label>Nome do Paciente:</label>
+    <input type="text" required>
+
+    <label>Especialidade:</label>
+    <select required>
+      <option>Clínico Geral</option>
+      <option>Pediatria</option>
+            <option>Ortopedia</option>
+    </select>
+
+    <label>Data da Consulta:</label>
+    <input type="date" required>
+
+    <label>Hora:</label>
+    <input type="time" required>
+
+    <button type="submit">Agendar</button>
+  </form>
+
+  <h3 class="subtitle">Consultas Agendadas</h3>
+  <div class="tabela-wrapper">
+    <table id="tabela-consultas">
+      <thead>
+        <tr>
+          <th>Paciente</th>
+          <th>Especialidade</th>
+          <th>Data</th>
+          <th>Hora</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Consultas aparecerão aqui -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const form = document.getElementById('form-agendamento');
+    const tabela = document.getElementById('tabela-consultas').querySelector('tbody');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const nome = form.elements[0].value;
+      const esp = form.elements[1].value;
+
+      const dataInput = form.elements[2].value;
+      const [ano, mes, dia] = dataInput.split("-");
+      const data = `${dia}/${mes}/${ano}`;
+
+      const hora = form.elements[3].value;
+
+      const row = tabela.insertRow();
+
+      row.innerHTML = `
+        <td>${nome}</td>
+        <td>${esp}</td>
+        <td>${data}</td>
+        <td>${hora}</td>
+        <td class="actions">
+          <button onclick="editar(this)">Editar</button>
+          <button onclick="cancelar(this)">Cancelar</button>
+        </td>
+      `;
+
+      form.reset();
+    });
+
+    function editar(btn) {
+      const row = btn.parentElement.parentElement;
+      const dados = row.querySelectorAll('td');
+
+      form.elements[0].value = dados[0].innerText;
+      form.elements[1].value = dados[1].innerText;
+
+      const [dia, mes, ano] = dados[2].innerText.split("/");
+      form.elements[2].value = `${ano}-${mes}-${dia}`;
+
+      form.elements[3].value = dados[3].innerText;
+
+      tabela.deleteRow(row.rowIndex - 1);
+    }
+
+    function cancelar(btn) {
+      const row = btn.parentElement.parentElement;
+      tabela.deleteRow(row.rowIndex - 1);
+    }
+  </script>
+
+</body>
+</html>

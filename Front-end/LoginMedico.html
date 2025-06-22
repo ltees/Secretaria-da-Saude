@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secretaria de Saúde - Login</title>
+  <link rel="website icon" href="../Imagens/GDF.jpeg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <a href="index.html">
+        <img src="../Imagens/Logo.png" alt="Secretaria de Saúde" style="height:130px">
+      </a>
+    </div>
+
+    <input type="email" id="email" placeholder="Digite seu e-mail de login:" required>
+    <input type="password" id="senha" placeholder="Digite sua senha:" required>
+    <button onclick="fazerLogin()">Entrar</button>
+    
+    <a class="link" href="medicos-cadastrar.html">Quero me cadastrar</a>
+    <div class="link" id="voltar"></div>
+  </div>
+
+  <script>
+    function fazerLogin() {
+      const email = document.getElementById('email').value.trim();
+      const senha = document.getElementById('senha').value.trim();
+
+      if (email && senha) {
+        // Você pode validar com servidor aqui se quiser
+        window.location.href = 'consultaMedica.html';
+      } else {
+        alert('Por favor, preencha todos os campos.');
+      }
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const tipo = params.get('tipo');
+    const outro = tipo === 'profissional' ? 'paciente' : 'profissional';
+    if (tipo) {
+      document.getElementById('voltar').innerHTML = `<a href='login.html?tipo=${outro}'>Fazer login como <b>${outro.charAt(0).toUpperCase() + outro.slice(1)}</b></a>`;
+    }
+  </script>
+</body>
+</html>

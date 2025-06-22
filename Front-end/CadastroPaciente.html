@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secretaria de Saúde - Cadastro</title>
+  <link rel="website icon" href="../Imagens/GDF.jpeg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <a href="./index.html">
+        <img src="../Imagens/Logo.png" alt="Secretaria de Saúde" style="height:130px">
+      </a>
+    </div>
+
+    <label>Digite seu e-mail:</label>
+    <input id="email" type="email" placeholder="exemplo@123.com">
+
+    <label>Digite seu nome completo:</label>
+    <input id="nome" type="text" placeholder="Digite seu nome aqui">
+
+    <label>Digite sua senha:</label>
+    <input id="senha" type="password" placeholder="Digite pelo menos 6 caracteres">
+
+    <label>Digite seu CPF:</label>
+    <input id="cpf" type="text" placeholder="000.000.000-00">
+
+    <label>Digite seu telefone:</label>
+    <input id="telefone" type="text" placeholder="(99) 9 9999-9999">
+
+    <input id="endereco" type="text" placeholder="Digite seu endereço:">
+
+    <button onclick="validarCadastro()">Cadastrar</button>
+    <a class="link" href="./LoginPaciente.html">Já sou cadastrado</a>
+  </div>
+
+  <script>
+    function validarCadastro() {
+      const email = document.getElementById('email').value.trim();
+      const nome = document.getElementById('nome').value.trim();
+      const senha = document.getElementById('senha').value.trim();
+      const cpf = document.getElementById('cpf').value.trim();
+      const telefone = document.getElementById('telefone').value.trim();
+      const endereco = document.getElementById('endereco').value.trim();
+
+      if (!email || !nome || !senha || !cpf || !telefone || !endereco) {
+        alert("Por favor, preencha todos os campos.");
+        return;
+      }
+      alert("Cadastro realizado com sucesso!");
+      window.location.href = "agendamento.html";
+    }
+  </script>
+</body>
+</html>
